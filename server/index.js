@@ -1,7 +1,14 @@
+require("dotenv").config();
+
 const express = require("express");
 const cors = require("cors");
 
+const connectDB = require("./config/db");
+const Trip = require("./models/Trip");
+
 const app = express();
+
+connectDB();
 
 app.use(cors());
 app.use(express.json());
@@ -12,12 +19,22 @@ app.get("/", (req, res) => {
   res.send("Backend is running!");
 });
 
-app.post("/trips", (req, res) => {
-  console.log(req.body);
+app.post("/trips", async (req, res) => {
+  try {
+    const trip = await Trip.create({
+      tripName: req.body.tripName,
+      travelers: Number(req.body.travelers),
+      duration: Number(req.body.duration),
+      tripScope: req.body.tripScope,
+      destination: req.body.destination,
+    });
 
-  res.json({
-    message: "Trip created successfully!",
-  });
+    res.status(201).json(trip);
+  } catch (error) {
+    res.status(500).json({
+      message: error.message,
+    });
+  }
 });
 
 app.listen(PORT, () => {

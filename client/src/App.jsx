@@ -1,10 +1,18 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+import Home from "./pages/Home";
+import CreateTrip from "./pages/CreateTrip";
+import JoinTrip from "./pages/JoinTrip";
+
 function App() {
   return (
-    <div className="flex h-screen items-center justify-center bg-slate-900">
-      <h1 className="text-5xl font-bold text-white">
-        AreWeGoing?
-      </h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/create-trip" element={<CreateTrip />} />
+        <Route path="/join-trip" element={<JoinTrip />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

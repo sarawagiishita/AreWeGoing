@@ -6,6 +6,12 @@ const tripSchema = new mongoose.Schema({
     required: true,
   },
 
+  tripCode: {
+    type: String,
+    required: true,
+    unique: true,
+  },
+
   travelers: {
     type: Number,
     required: true,

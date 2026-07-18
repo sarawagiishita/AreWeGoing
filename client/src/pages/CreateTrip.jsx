@@ -2,8 +2,11 @@ import { useState } from "react";
 import Input from "../components/Input";
 import TripScopeCard from "../components/TripScopeCard";
 import Button from "../components/Button";
+import { createTrip } from "../services/tripService";
+import { useNavigate } from "react-router-dom";
 
 function CreateTrip() {
+  const navigate = useNavigate();
   const [tripName, setTripName] = useState("");
   const [travelers, setTravelers] = useState("");
   const [duration, setDuration] = useState("");
@@ -27,27 +30,20 @@ function CreateTrip() {
       return;
     }
 
-    const response = await fetch("http://localhost:5000/trips", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        tripName,
-        travelers,
-        duration,
-        tripScope,
-        destination,
-      }),
+    const data = await createTrip({
+      tripName,
+      travelers,
+      duration,
+      tripScope,
+      destination,
     });
 
-    const data = await response.json();
-
     console.log(data);
+    navigate(`/waiting-room/${data.tripCode}`);
   }
 
   return (
-    <div className="min-h-screen bg-purple-50 flex justify-center items-center p-6">
+    <div className="min-h-screen bg-purple-100 flex justify-center items-center p-6">
       <div className="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-8">
         <h1 className="text-5xl font-bold tracking-tight">
           Create a Trip

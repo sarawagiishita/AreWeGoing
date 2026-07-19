@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 function CreateTrip() {
   const navigate = useNavigate();
+  const [hostName, setHostName] = useState("");
   const [tripName, setTripName] = useState("");
   const [travelers, setTravelers] = useState("");
   const [duration, setDuration] = useState("");
@@ -31,6 +32,7 @@ function CreateTrip() {
     }
 
     const data = await createTrip({
+      hostName,
       tripName,
       travelers,
       duration,
@@ -38,12 +40,14 @@ function CreateTrip() {
       destination,
     });
 
+    localStorage.setItem("participantName", hostName);
+
     console.log(data);
-    navigate(`/waiting-room/${data.tripCode}`);
+    navigate(`/trip-lobby/${data.tripCode}`);
   }
 
   return (
-    <div className="min-h-screen bg-purple-100 flex justify-center items-center p-6">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-purple-100 to-purple-200 flex justify-center items-center p-6">
       <div className="w-full max-w-3xl bg-white rounded-2xl shadow-lg p-8">
         <h1 className="text-5xl font-bold tracking-tight">
           Create a Trip
@@ -52,6 +56,13 @@ function CreateTrip() {
         <p className="text-gray-500 mt-2 mb-8">
           Fill in the basic details to get started.
         </p>
+
+        <Input
+          label="Your Name"
+          placeholder="Enter your name"
+          value={hostName}
+          onChange={(e) => setHostName(e.target.value)}
+        />
 
         <Input
           label="Trip Name"

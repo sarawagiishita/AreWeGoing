@@ -1,4 +1,4 @@
-function Button({ children, variant, onClick, }) {
+function Button({ children, variant, onClick, className = "" }) {
   let buttonStyle = "";
 
   if (variant === "primary") {
@@ -8,7 +8,10 @@ function Button({ children, variant, onClick, }) {
   }
 
   return (
-    <button className={buttonStyle} onClick={onClick}>
+    <button
+      className={`${buttonStyle} ${className}`}
+      onClick={onClick}
+    >
       {children}
     </button>
   );

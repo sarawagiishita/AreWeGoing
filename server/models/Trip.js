@@ -31,6 +31,36 @@ const tripSchema = new mongoose.Schema({
     type: String,
     default: "",
   },
+
+  participants: [
+    {
+      name: {
+        type: String,
+        required: true,
+      },
+
+      isHost: {
+        type: Boolean,
+        default: false,
+      },
+
+      hasCompleted: {
+        type: Boolean,
+        default: false,
+      },
+
+      responses: {
+        type: Object,
+        default: {},
+      },
+    },
+  ],
+
+  status: {
+    type: String,
+    enum: ["lobby", "questionnaire", "results"],
+    default: "lobby",
+  },
 });
 
 module.exports = mongoose.model("Trip", tripSchema);

@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { getTrip } from "../services/tripService";
+import { useNavigate } from "react-router-dom";
 
 function TripLobby() {
   const { tripCode } = useParams();
   const [trip, setTrip] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchTrip() {
@@ -98,7 +100,7 @@ function TripLobby() {
         </div>
 
         <div className="mt-8">
-          <button
+          <button onClick={() => navigate(`/questionnaire/${trip.tripCode}/money`)}
             className="w-full bg-violet-600 hover:bg-violet-700 text-white font-semibold py-3 rounded-xl transition"
           >
             Start My Questionnaire
